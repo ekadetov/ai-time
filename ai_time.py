@@ -1,11 +1,7 @@
 import sys
-import time
 import threading
-import openai
-import json
 import pygame
 import random
-from datetime import datetime, timedelta
 from PyQt6.QtWidgets import (
     QApplication,
     QMainWindow,
@@ -18,15 +14,18 @@ from PyQt6.QtWidgets import (
     QWidget,
     QTabWidget,
     QComboBox,
-    QSlider,
     QProgressBar,
     QMessageBox,
     QSystemTrayIcon,
     QMenu,
 )
-from PyQt6.QtCore import Qt, QTimer, pyqtSignal, QSize
-from PyQt6.QtGui import QIcon, QPixmap, QFont, QAction
-from models import TimerModel, TaskManager, StatsManager, AIAssistant, SettingsManager
+from PyQt6.QtCore import Qt, QTimer
+from PyQt6.QtGui import QIcon, QFont, QAction
+from AIAssistant import AIAssistant
+from StatsManager import StatsManager
+from TaskManager import TaskManager
+from TimerModel import TimerModel
+from SettingsManager import SettingsManager
 
 
 class AITimer(QMainWindow):
