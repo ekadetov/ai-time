@@ -10,7 +10,7 @@ class AIAssistant:
         self.api_key = ""
         self.is_api_key_valid = False
         self.ai_suggestions = []
-        self.model_type = "openai"  # "openai" or "gemini"
+        self.model_type = "gemini"  # "openai" or "gemini"
         self.base_url = "https://generativelanguage.googleapis.com/v1beta/models"
         self.current_model = "gpt-3.5-turbo"  # Default model
 
@@ -23,7 +23,7 @@ class AIAssistant:
         self.base_url = base_url
         # Set the model based on model_type
         self.current_model = (
-            "gemini-pro" if self.model_type == "gemini" else "gpt-3.5-turbo"
+            "gemini-2.0-flash" if self.model_type == "gemini" else "gpt-3.5-turbo"
         )
 
         try:

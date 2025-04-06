@@ -259,7 +259,8 @@ class AITimer(QMainWindow):
 
     def validate_api_key(self):
         key = self.api_key_input.text().strip()
-        success, message = self.ai_assistant.validate_api_key(key)
+        success, message = self.ai_assistant.validate_api_key(key, model_type="gemini", 
+                                                              base_url="https://generativelanguage.googleapis.com/v1beta/openai/")
 
         if success:
             QMessageBox.information(self, "Success", message)
