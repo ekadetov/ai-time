@@ -4,12 +4,19 @@ PyQt6>=6.5.0
 # Audio playback
 pygame>=2.5.0
 
-# OpenAI API integration
+# OpenAI API integration for Gemini compatibility
 openai>=1.0.0
+
+# Google API Client
+google-api-python-client>=2.97.0
+
+# Auth libraries for Google APIs
+google-auth>=2.22.0
+google-auth-oauthlib>=1.0.0
 
 # Date and time handling
 python-dateutil>=2.8.2
 
-# System dependencies - these are typically installed with PyQt6 but listed for completeness
+# System dependencies
 setuptools>=65.5.0
 wheel>=0.38.0
