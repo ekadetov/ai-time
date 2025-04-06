@@ -176,20 +176,31 @@ class AIAssistant:
         self.api_key = ""
         self.is_api_key_valid = False
         self.ai_suggestions = []
+        self.model_type = "openai"  # "openai" or "gemini"
+        self.base_url = "https://generativelanguage.googleapis.com/v1beta/models"
 
-    def validate_api_key(self, key):
+    def validate_api_key(self, key, model_type="openai", base_url=None):
         if not key:
             return False, "API Key Required"
 
         self.api_key = key
+        self.model_type = model_type
+        self.base_url = base_url
 
         try:
             # Initialize OpenAI client with the provided key
-            self.client = openai.OpenAI(api_key=self.api_key)
+            if self.model_type == "gemini" and self.base_url:
+                self.client = openai.OpenAI(
+                    api_key=self.api_key, base_url=self.base_url
+                )
+            else:
+                self.client = openai.OpenAI(api_key=self.api_key)
 
             # Simple test call to validate the API key
+            model = "gemini-pro" if self.model_type == "gemini" else "gpt-3.5-turbo"
+
             response = self.client.chat.completions.create(
-                model="gpt-3.5-turbo",
+                model=model,
                 messages=[
                     {
                         "role": "user",
@@ -224,8 +235,9 @@ class AIAssistant:
             Be encouraging but not overly enthusiastic. Sound like a knowledgeable productivity coach.
             """
 
+            model = "gemini-pro" if self.model_type == "gemini" else "gpt-3.5-turbo"
             response = self.client.chat.completions.create(
-                model="gpt-3.5-turbo",
+                model=model,
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=150,
             )
@@ -255,8 +267,9 @@ class AIAssistant:
             Keep your response concise (under 100 words) and make the suggestion specific.
             """
 
+            model = "gemini-pro" if self.model_type == "gemini" else "gpt-3.5-turbo"
             response = self.client.chat.completions.create(
-                model="gpt-3.5-turbo",
+                model=model,
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=150,
             )
@@ -290,8 +303,9 @@ class AIAssistant:
             Keep your response to about 150 words. Be insightful but practical.
             """
 
+            model = "gemini-pro" if self.model_type == "gemini" else "gpt-3.5-turbo"
             response = self.client.chat.completions.create(
-                model="gpt-3.5-turbo",
+                model=model,
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=200,
             )
@@ -322,8 +336,9 @@ class AIAssistant:
             Format the tasks as a simple list with no explanations or additional text.
             """
 
+            model = "gemini-pro" if self.model_type == "gemini" else "gpt-3.5-turbo"
             response = self.client.chat.completions.create(
-                model="gpt-3.5-turbo",
+                model=model,
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=250,
             )
@@ -375,8 +390,9 @@ class AIAssistant:
             Be specific, actionable, and encouraging.
             """
 
+            model = "gemini-pro" if self.model_type == "gemini" else "gpt-3.5-turbo"
             response = self.client.chat.completions.create(
-                model="gpt-3.5-turbo",
+                model=model,
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=300,
             )
@@ -388,10 +404,16 @@ class AIAssistant:
             return None, f"Error getting AI insights: {str(e)}"
 
     def get_settings_dict(self):
-        return {"api_key": self.api_key}
+        return {
+            "api_key": self.api_key,
+            "model_type": self.model_type,
+            "base_url": self.base_url,
+        }
 
     def load_from_settings(self, settings):
         self.api_key = settings.get("api_key", "")
+        self.model_type = settings.get("model_type", "openai")
+        self.base_url = settings.get("base_url", None)
 
 
 class SettingsManager:
