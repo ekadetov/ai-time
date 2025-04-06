@@ -241,7 +241,13 @@ class AITimer(QMainWindow):
 
     def setup_system_tray(self):
         self.tray_icon = QSystemTrayIcon(self)
-        self.tray_icon.setIcon(QIcon.fromTheme("alarm-clock"))
+
+        # Try theme icon, fallback to local icon
+        icon = QIcon.fromTheme("alarm-clock")
+        if icon.isNull():
+            icon = QIcon("resources/icons/clock_icon.png")  # Provide a valid path to your icon file
+
+        self.tray_icon.setIcon(icon)
 
         tray_menu = QMenu()
 
