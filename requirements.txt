@@ -1,0 +1,15 @@
+# GUI framework
+PyQt6>=6.5.0
+
+# Audio playback
+pygame>=2.5.0
+
+# OpenAI API integration
+openai>=1.0.0
+
+# Date and time handling
+python-dateutil>=2.8.2
+
+# System dependencies - these are typically installed with PyQt6 but listed for completeness
+setuptools>=65.5.0
+wheel>=0.38.0
